@@ -1,0 +1,289 @@
+export HOMEBREW_FORCE_BREWED_CURL="true"
+export HOMEBREW_FORCE_BREWED_GIT="true"
+export HOMEBREW_FORCE_VENDOR_RUBY="true"
+
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/1001028/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=1
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+HIST_STAMPS="yyyy-mm-dd"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(pdm)
+
+#source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# load zgenom
+source "${HOME}/.zgenom/zgenom.zsh"
+
+# Check for plugin and zgenom updates every 7 days
+# This does not increase the startup time.
+zgenom autoupdate --background
+
+# if the init script doesn't exist
+if ! zgenom saved; then
+    echo "Creating a zgenom save"
+
+    # Ohmyzsh
+    zgenom ohmyzsh
+
+    # plugins
+    zgenom ohmyzsh plugins/adb
+    zgenom ohmyzsh plugins/alias-finder
+    zgenom ohmyzsh plugins/aliases
+    zgenom ohmyzsh plugins/ansible
+    zgenom ohmyzsh plugins/asdf
+    # zgenom ohmyzsh plugins/autoenv
+    zgenom ohmyzsh plugins/autojump
+    zgenom ohmyzsh plugins/autopep8
+    zgenom ohmyzsh plugins/aws
+    zgenom ohmyzsh plugins/bgnotify
+    zgenom ohmyzsh plugins/brew
+    zgenom ohmyzsh plugins/colored-man-pages
+    zgenom ohmyzsh plugins/colorize
+    zgenom ohmyzsh plugins/command-not-found
+    zgenom ohmyzsh plugins/common-aliases
+    zgenom ohmyzsh plugins/direnv
+    zgenom ohmyzsh plugins/docker
+    zgenom ohmyzsh plugins/docker-compose
+    zgenom ohmyzsh plugins/docker-machine
+    # zgenom ohmyzsh plugins/dotenv
+    zgenom ohmyzsh plugins/emacs
+    zgenom ohmyzsh plugins/fzf
+    zgenom ohmyzsh plugins/gem
+    zgenom ohmyzsh plugins/git
+    zgenom ohmyzsh plugins/github
+    zgenom ohmyzsh plugins/gitignore
+    zgenom ohmyzsh plugins/globalias
+    zgenom ohmyzsh plugins/gnu-utils
+    zgenom ohmyzsh plugins/golang
+    zgenom ohmyzsh plugins/gpg-agent
+    zgenom ohmyzsh plugins/httpie
+    zgenom ohmyzsh plugins/iterm2
+    zgenom ohmyzsh plugins/jump
+    zgenom ohmyzsh plugins/keychain
+    # zgenom ohmyzsh plugins/kube-ps1
+    zgenom ohmyzsh plugins/kubectl
+    zgenom ohmyzsh plugins/kubectx
+    zgenom ohmyzsh plugins/man
+    zgenom ohmyzsh plugins/minikube
+    zgenom ohmyzsh plugins/mosh
+    zgenom ohmyzsh plugins/pep8
+    zgenom ohmyzsh plugins/perms
+    zgenom ohmyzsh plugins/pip
+    # zgenom ohmyzsh plugins/pipenv
+    # zgenom ohmyzsh plugins/pyenv
+    zgenom ohmyzsh plugins/pylint
+    zgenom ohmyzsh plugins/python
+    zgenom ohmyzsh plugins/ripgrep
+    zgenom ohmyzsh plugins/ssh-agent
+    zgenom ohmyzsh plugins/sudo
+    zgenom ohmyzsh plugins/terraform
+    zgenom ohmyzsh plugins/thefuck
+    zgenom ohmyzsh plugins/timer
+    zgenom ohmyzsh plugins/tmux
+    zgenom ohmyzsh plugins/z
+    zgenom ohmyzsh plugins/zsh-interactive-cd
+    zgenom ohmyzsh plugins/zsh-navigation-tools
+
+    # Install ohmyzsh macos plugin if on macOS
+    [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
+
+    # prezto options
+#    zgenom prezto editor key-bindings 'emacs'
+#    zgenom prezto prompt theme 'sorin'
+
+    # prezto and modules
+    # If you use prezto and ohmyzsh - load ohmyzsh first.
+#    zgenom prezto
+#    zgenom prezto command-not-found
+
+    # Load prezto tmux when tmux is installed
+#    if hash tmux &>/dev/null; then
+#        zgenom prezto tmux
+#    fi
+
+    #zgenom load zsh-users/zsh-syntax-highlighting
+    #zgenom load /path/to/super-secret-private-plugin
+
+    # bulk load
+#    zgenom loadall <<EOPLUGINS
+#        zsh-users/zsh-history-substring-search
+#        /path/to/local/plugin
+#EOPLUGINS
+    # ^ can't indent this EOPLUGINS
+
+    # completions
+    #zgenom load zsh-users/zsh-completions
+
+    # theme
+    #zgenom ohmyzsh themes/arrow
+
+    # save all to init script
+    zgenom save
+
+    # Compile your zsh files
+    zgenom compile "$HOME/.zshrc"
+    zgenom compile $ZDOTDIR
+
+    # You can perform other "time consuming" maintenance tasks here as well.
+    # If you use `zgenom autoupdate --background` you're making sure it gets
+    # executed every 7 days.
+
+    # rbenv rehash
+fi
+
+
+export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+export LANG=ko_KR.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+
+eval $(thefuck --alias)
+
+export PATH=$HOME/bin:$PATH
+
+# python3 is default
+export PATH=/usr/local/opt/python3/libexec/bin:$PATH
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
+# for Rust
+source $HOME/.cargo/env
+
+# for Ruby
+export PATH="$PATH:/Users/1001028/.gem/ruby/2.6.0/bin"
+
+# iTerm2
+source /Users/1001028/.iterm2_shell_integration.zsh
+
+# coreutils
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+# curl
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+unalias ls
+alias ls='ls -GFh --color=auto'
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+# zsh-history-substring-search.zsh
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# dotnet
+export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
+if [ -n "$PYTHONPATH" ]; then
+    export PYTHONPATH='/usr/local/Cellar/pdm/1.9.0/libexec/lib/python3.10/site-packages/pdm/pep582':$PYTHONPATH
+else
+    export PYTHONPATH='/usr/local/Cellar/pdm/1.9.0/libexec/lib/python3.10/site-packages/pdm/pep582'
+fi
+
+# kube_ps1
+# source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+# PS1='$(kube_ps1)'$PS1
+PATH="/usr/local/opt/libressl/bin:$PATH"
+PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+PATH="/usr/local/opt/libiconv/bin:$PATH"
+
+# for python
+PATH="/Users/1001028/Library/Python/3.9/bin:$PATH"
+# uutils-coreutils
+PATH="/usr/local/opt/uutils-coreutils/libexec/uubin:$PATH"
+# uutils-findutils
+PATH="/usr/local/opt/uutils-findutils/libexec/uubin:$PATH"
+
+export PATH
