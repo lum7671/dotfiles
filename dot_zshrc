@@ -2,6 +2,11 @@ export HOMEBREW_FORCE_BREWED_CURL="true"
 export HOMEBREW_FORCE_BREWED_GIT="true"
 export HOMEBREW_FORCE_VENDOR_RUBY="true"
 
+LANG=ko_KR
+LANGUAGE=ko_KR
+LC_CTYPE=ko_KR.UTF-8
+LC_ALL=ko_KR.UTF-8
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -127,6 +132,7 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/gpg-agent
     zgenom ohmyzsh plugins/httpie
     zgenom ohmyzsh plugins/iterm2
+    zgenom ohmyzsh plugins/isodate
     zgenom ohmyzsh plugins/jump
     zgenom ohmyzsh plugins/keychain
     # zgenom ohmyzsh plugins/kube-ps1
@@ -143,12 +149,14 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/pylint
     zgenom ohmyzsh plugins/python
     zgenom ohmyzsh plugins/ripgrep
+    zgenom ohmyzsh plugins/rust
     zgenom ohmyzsh plugins/ssh-agent
     zgenom ohmyzsh plugins/sudo
     zgenom ohmyzsh plugins/terraform
     zgenom ohmyzsh plugins/thefuck
     zgenom ohmyzsh plugins/timer
     zgenom ohmyzsh plugins/tmux
+    zgenom ohmyzsh plugins/vscode
     zgenom ohmyzsh plugins/z
     zgenom ohmyzsh plugins/zsh-interactive-cd
     zgenom ohmyzsh plugins/zsh-navigation-tools
@@ -164,6 +172,7 @@ if ! zgenom saved; then
     # If you use prezto and ohmyzsh - load ohmyzsh first.
 #    zgenom prezto
 #    zgenom prezto command-not-found
+
 
     # Load prezto tmux when tmux is installed
 #    if hash tmux &>/dev/null; then
@@ -225,8 +234,6 @@ export ARCHFLAGS="-arch x86_64"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
-
 eval $(thefuck --alias)
 
 export PATH=$HOME/bin:$PATH
@@ -246,9 +253,6 @@ export PATH="$PATH:/Users/1001028/.gem/ruby/2.6.0/bin"
 
 # iTerm2
 source /Users/1001028/.iterm2_shell_integration.zsh
-
-# coreutils
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 # curl
 export PATH="/usr/local/opt/curl/bin:$PATH"
@@ -276,14 +280,46 @@ fi
 # source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 # PS1='$(kube_ps1)'$PS1
 PATH="/usr/local/opt/libressl/bin:$PATH"
-PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/libiconv/bin:$PATH"
 
 # for python
 PATH="/Users/1001028/Library/Python/3.9/bin:$PATH"
 # uutils-coreutils
 PATH="/usr/local/opt/uutils-coreutils/libexec/uubin:$PATH"
+
 # uutils-findutils
 PATH="/usr/local/opt/uutils-findutils/libexec/uubin:$PATH"
 
+# emscs
+PATH="/usr/local/Cellar/emacs-mac/emacs-28.2-mac-9.1/bin:$PATH"
+
+# doom
+PATH="/Users/1001028/.emacs.d/bin:$PATH"
+
+# gawk
+PATH="/usr/local/opt/gawk/libexec/gnubin:$PATH"
+
+# coreutils
+# PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+# findutils
+# PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+
 export PATH
+
+# fd
+export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export FZF_DEFAULT_OPTS="--ansi"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export HOMEBREW_GITHUB_API_TOKEN=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
+export PATH="/usr/local/opt/qt@5/bin:$PATH"
+
+# bun completions
+[ -s "/Users/1001028/.bun/_bun" ] && source "/Users/1001028/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# local python
+export PATH="$HOME/Library/Python/3.11/bin:$PATH"
