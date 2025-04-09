@@ -1,4 +1,7 @@
 # If you come from bash you might have to change your $PATH.
+
+. "$HOME/.rye/env"
+
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
