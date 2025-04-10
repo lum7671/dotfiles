@@ -1,5 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 
+export LANG=ko_KR.UTF-8
+export LC_ALL=ko_KR.UTF-8
+
 . "$HOME/.rye/env"
 
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -76,6 +79,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
     alias-finder
     aliases
+    brew
     colored-man-pages
     colorize
     command-not-found
@@ -126,6 +130,7 @@ source $ZSH/oh-my-zsh.sh
 fpath=(/usr/local/share/zsh-completions $fpath)
 autoload -Uz compinit && compinit
 
+PATH="$HOME/.config/emacs/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/opt/bin:$PATH"
 PATH="$HOME/python-env/.venv/bin:$PATH"
