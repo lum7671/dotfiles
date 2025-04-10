@@ -43,31 +43,32 @@
 ;;(setq doom-modeline-major-mode-icon t)
 
 
-;; ê¸°ë³¸ ¯ş°íŠ¯ş¯ş¤ì¯ş•
+;; ê¸°ë³¸ í°íŠ¸ ì„¤ì •
 (setq doom-font (font-spec :family "D2CodingLigature Nerd Font Propo" :size 14 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "D2CodingLigature Nerd Font Propo" :size 14))
 
-;; nerd-icons ¯ş¤ì¯ş•
+;; nerd-icons ì„¤ì •
 (use-package nerd-icons
   :custom
   (nerd-icons-font-family "D2CodingLigature Nerd Font Propo")
   :config
   (setq nerd-icons-scale-factor 1.2)
-  (setq nerd-icons-default-adjust 0.0))  ; ¯ş„¯ş´ì¯ş¯ş„ ¯ş½ê¯ş ¯ş„ë¡œ ì¡°ì¯ş•
+  (setq nerd-icons-default-adjust 0.0))  ; ì•„ì´ì½˜ì„ ì•½ê°„ ìœ„ë¡œ ì¡°ì •
 
-;; ëª¨ë“œ¯ş¼ì¯ş¯ş¤ì¯ş•
+;; ëª¨ë“œë¼ì¸ ì„¤ì •
 (setq doom-modeline-icon t
       doom-modeline-major-mode-icon t
       doom-modeline-major-mode-color-icon t
-      doom-modeline-height 30  ; ëª¨ë“œ¯ş¼ì¯ş¯ş’¯ş¯şì¦ê°€
+      doom-modeline-height 30  ; ëª¨ë“œë¼ì¸ ë†’ì´ ì¦ê°€
       doom-modeline-bar-width 3
       doom-modeline-segment-padding 2
-      doom-modeline-icon-size 12)  ; ¯ş„¯ş´ì¯ş ¯ş¬ê¸°ë¥¯ş¯ş°íŠ¯ş¯ş¬ê¸°¯ş ë§ì¶¯ş
-;; ëª¨ë“œ¯ş¼ì¯ş¯ş°íŠ¯ş¯ş¤ì¯ş•
+      doom-modeline-icon-size 12)  ; ì•„ì´ì½˜ í¬ê¸°ë¥¼ í°íŠ¸ í¬ê¸°ì— ë§ì¶¤
+
+;; ëª¨ë“œë¼ì¸ í°íŠ¸ ì„¤ì •
 (set-face-attribute 'mode-line nil :family "D2CodingLigature Nerd Font Propo" :height 140)
 (set-face-attribute 'mode-line-inactive nil :family "D2CodingLigature Nerd Font Propo" :height 140)
 
-;; ¯ş„¯ş´ì¯ş ¯ş°íŠ¯ş¯ş¤ì¯ş•
+;; ì•„ì´ì½˜ í°íŠ¸ ì„¤ì •
 (set-fontset-font t 'symbol "D2CodingLigature Nerd Font Propo" nil 'prepend)
 
 
@@ -80,14 +81,14 @@
 ;;
 ;;;;(set-fontset-font t 'symbol "Hack Nerd Font" nil 'prepend)
 ;;
-;;(setq doom-modeline-icon-size 12)  ; ëª¨ë“œ¯ş¼ì¯ş¯ş„¯ş´ì¯ş ¯ş¬ê¸°ë¥¯ş¯ş°íŠ¯ş¯ş¬ê¸°¯ş ë§ì¶¥ë‹ˆ¯ş¯ş
+;;(setq doom-modeline-icon-size 12)  ; ëª¨ë“œë¼ì¸ ì•„ì´ì½˜ í¬ê¸°ë¥¼ í°íŠ¸ í¬ê¸°ì— ë§ì¶¥ë‹ˆë‹¤.
 ;;
 ;;(set-face-attribute 'mode-line nil :family "Hack Nerd Font" :height 120)
 ;;(set-face-attribute 'mode-line-inactive nil :family "Hack Nerd Font" :height 120)
 ;;
-;;(setq nerd-icons-scale-factor 1.2)  ; ê°’¯ş„ ì¡°ê¯ş¯ş¯şì¦ê°€¯şœì¼œ ë³´ì„¸ìš” (¯şˆ: 1.1, 1.2, 1.3)
-;;(setq nerd-icons-default-adjust 0.2)  ; ê¸°ë³¸ê°’¯ş€ -0.2¯ş…¯şˆ¯ş¯ş ¯ş‘¯ş˜ ê°’¯ş¼ë¯ş ¯ş¤ì¯ş•¯ş˜ë©¯şê°„ê²©ì¯ş¯ş“¯ş´ì¯ş¯şˆ¯ş¯ş
-;;(setq doom-modeline-segment-padding 2)  ; ê¸°ë³¸ê°’¯ş€ 1¯ş…¯şˆ¯ş¯ş ¯ş„¯ş”¯ş ¯ş°ë¯şì¡°ì¯ş•¯ş˜¯ş¸ìš”.
+;;(setq nerd-icons-scale-factor 1.2)  ; ê°’ì„ ì¡°ê¸ˆì”© ì¦ê°€ì‹œì¼œ ë³´ì„¸ìš” (ì˜ˆ: 1.1, 1.2, 1.3)
+;;(setq nerd-icons-default-adjust 0.2)  ; ê¸°ë³¸ê°’ì€ -0.2ì…ë‹ˆë‹¤. ì–‘ìˆ˜ ê°’ìœ¼ë¡œ ì„¤ì •í•˜ë©´ ê°„ê²©ì´ ë„“ì–´ì§‘ë‹ˆë‹¤.
+;;(setq doom-modeline-segment-padding 2)  ; ê¸°ë³¸ê°’ì€ 1ì…ë‹ˆë‹¤. í•„ìš”ì— ë”°ë¼ ì¡°ì •í•˜ì„¸ìš”.
 ;;
 ;;(setq doom-modeline-icon t)
 ;;(setq doom-modeline-major-mode-icon t)
@@ -174,7 +175,7 @@
   (setq denote-known-keywords '("work" "personal" "project"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
-  (setq denote-file-type nil) ; ¯şŒ¯ş¯ş¯ş•¯ş¥ì ¯ş¤ì¯ş• (nil¯ş€ .org)
+  (setq denote-file-type nil) ; íŒŒì¼ í™•ì¥ì ì„¤ì • (nilì€ .org)
   (setq denote-prompts '(title keywords))
   (setq denote-allow-multi-word-keywords t))
 
@@ -230,9 +231,5 @@
   (setq python-shell-interpreter "python"
         python-shell-virtualenv-root (expand-file-name "~/.rye/shims")
         lsp-pyright-python-executable-cmd "python"))
-
-;; chezmoi
-(global-set-key (kbd "C-c C f")  #'chezmoi-find)
-(global-set-key (kbd "C-c C s")  #'chezmoi-write)
 
 ;; eol
