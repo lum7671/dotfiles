@@ -80,7 +80,6 @@ plugins=(
     alias-finder
     aliases
     brew
-    chezmoi
     colored-man-pages
     colorize
     command-not-found
