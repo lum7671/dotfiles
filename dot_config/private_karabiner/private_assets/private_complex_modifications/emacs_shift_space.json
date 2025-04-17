@@ -1,0 +1,36 @@
+{
+  "title": "Emacs: Shift+Space to Ctrl+Backslash",
+  "rules": [
+    {
+      "description": "Emacs: Map Shift + Space to Ctrl + \\ (C-\\) in Emacs only",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "spacebar",
+            "modifiers": {
+              "mandatory": [ "shift" ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "international3",
+              "modifiers": [ "left_control" ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^org\\.gnu\\.Emacs$",
+                "^org\\.gnu\\.AquamacsEmacs$",
+                "^org\\.emacs\\.Emacs$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

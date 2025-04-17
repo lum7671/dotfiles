@@ -1,0 +1,22 @@
+{
+  "title": "HHKB: Fn+F to Media Play/Pause",
+  "rules": [
+    {
+      "description": "해피해킹 키보드에서 Fn + F 를 Play/Pause로 매핑",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f20",
+            "modifiers": {}
+          },
+          "to": [
+            {
+              "consumer_key_code": "play_or_pause"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
