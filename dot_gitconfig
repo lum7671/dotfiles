@@ -1,22 +1,26 @@
+[core]
+	pager = delta
+	excludesfile = /Users/x/.gitignore_global
 [user]
 	name = 장두현(Doohyun Jang)/Data Platform개발팀/SKP
 	email = nate.jang@sk.com
 [diff]
 	tool = kdiff3
-[difftool "kdiff3"]
-	path = /usr/local/bin/kdiff3
-	trustExitCode = false
 [difftool]
 	prompt = false
 	trustExitCode = false
 	keepBackup = false
 	keepTemporaries = false
-[core]
-	pager = delta
-	excludesfile = /Users/x/.gitignore_global
+[difftool "kdiff3"]
+	path = /usr/local/bin/kdiff3
+	trustExitCode = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
+[merge]
+    tool = kdiff3
+[mergetool "kdiff3"]
+    path = /usr/local/bin/kdiff3
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
@@ -36,7 +40,3 @@
     # delta detects terminal colors automatically; set one of these to disable auto-detection
     dark = true
     # light = true
-
-[merge]
-    conflictstyle = zdiff3
-
