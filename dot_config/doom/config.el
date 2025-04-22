@@ -44,13 +44,13 @@
 
 
 ;; 기본 폰트 설정
-(setq doom-font (font-spec :family "D2CodingLigature Nerd Font Propo" :size 14 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "D2CodingLigature Nerd Font Propo" :size 14))
+(setq doom-font (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14))
 
 ;; nerd-icons 설정
 (use-package nerd-icons
   :custom
-  (nerd-icons-font-family "D2CodingLigature Nerd Font Propo")
+  (nerd-icons-font-family "D2CodingLigature Nerd Font Mono")
   :config
   (setq nerd-icons-scale-factor 1.2)
   (setq nerd-icons-default-adjust 0.0))  ; 아이콘을 약간 위로 조정
@@ -65,11 +65,11 @@
       doom-modeline-icon-size 12)  ; 아이콘 크기를 폰트 크기에 맞춤
 
 ;; 모드라인 폰트 설정
-(set-face-attribute 'mode-line nil :family "D2CodingLigature Nerd Font Propo" :height 140)
-(set-face-attribute 'mode-line-inactive nil :family "D2CodingLigature Nerd Font Propo" :height 140)
+(set-face-attribute 'mode-line nil :family "D2CodingLigature Nerd Font Mono" :height 140)
+(set-face-attribute 'mode-line-inactive nil :family "D2CodingLigature Nerd Font Mono" :height 140)
 
 ;; 아이콘 폰트 설정
-(set-fontset-font t 'symbol "D2CodingLigature Nerd Font Propo" nil 'prepend)
+(set-fontset-font t 'symbol "D2CodingLigature Nerd Font Mono" nil 'prepend)
 
 
 ;;(setq doom-font (font-spec :family "Hack Nerd Font" :size 14 :weight 'semi-light)
@@ -171,7 +171,7 @@
 
 (use-package! denote
   :config
-  (setq denote-directory (expand-file-name "/Users/x/SynologyDrive/syncthing/denote"))
+  (setq denote-directory (expand-file-name "~/SynologyDrive/syncthing/denote"))
   (setq denote-known-keywords '("work" "personal" "project"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
