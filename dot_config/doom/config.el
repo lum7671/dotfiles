@@ -42,34 +42,40 @@
 ;;(setq all-the-icons-scale-factor 1.1)
 ;;(setq doom-modeline-major-mode-icon t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 기본 영문 폰트 설정 (JetBrainsMono Nerd Font Mono)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14))
 
-;; 기본 폰트 설정
-(setq doom-font (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14))
+;; 한글 폰트 설정 (D2CodingLigature Nerd Font Mono)
+;; 유니코드 한글 블록에만 적용
+(set-fontset-font t 'hangul (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14))
 
 ;; nerd-icons 설정
 (use-package nerd-icons
   :custom
-  (nerd-icons-font-family "D2CodingLigature Nerd Font Mono")
+  (nerd-icons-font-family "JetBrainsMono Nerd Font Mono")
   :config
   (setq nerd-icons-scale-factor 1.2)
-  (setq nerd-icons-default-adjust 0.0))  ; 아이콘을 약간 위로 조정
+  (setq nerd-icons-default-adjust 0.0))
 
 ;; 모드라인 설정
 (setq doom-modeline-icon t
       doom-modeline-major-mode-icon t
       doom-modeline-major-mode-color-icon t
-      doom-modeline-height 30  ; 모드라인 높이 증가
+      doom-modeline-height 30
       doom-modeline-bar-width 3
       doom-modeline-segment-padding 2
-      doom-modeline-icon-size 12)  ; 아이콘 크기를 폰트 크기에 맞춤
+      doom-modeline-icon-size 12)
 
-;; 모드라인 폰트 설정
-(set-face-attribute 'mode-line nil :family "D2CodingLigature Nerd Font Mono" :height 140)
-(set-face-attribute 'mode-line-inactive nil :family "D2CodingLigature Nerd Font Mono" :height 140)
+;; 모드라인 폰트 설정 (영문 기준)
+(set-face-attribute 'mode-line nil :family "JetBrainsMono Nerd Font Mono" :height 140)
+(set-face-attribute 'mode-line-inactive nil :family "JetBrainsMono Nerd Font Mono" :height 140)
 
 ;; 아이콘 폰트 설정
-(set-fontset-font t 'symbol "D2CodingLigature Nerd Font Mono" nil 'prepend)
+(set-fontset-font t 'symbol "JetBrainsMono Nerd Font Mono" nil 'prepend)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;(setq doom-font (font-spec :family "Hack Nerd Font" :size 14 :weight 'semi-light)
