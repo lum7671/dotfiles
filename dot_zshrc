@@ -3,6 +3,25 @@
 export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
 
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
+zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
+
+# eza
+# alias ls="eza --icons -F"
+zstyle ':omz:plugins:eza' 'dirs-first' yes
+zstyle ':omz:plugins:eza' 'git-status' yes
+zstyle ':omz:plugins:eza' 'header' yes
+# zstyle ':omz:plugins:eza' 'show-group' yes
+zstyle ':omz:plugins:eza' 'icons' yes
+zstyle ':omz:plugins:eza' 'color-scale' all
+# zstyle ':omz:plugins:eza' 'color-scale-mode' gradient|fixed
+# zstyle ':omz:plugins:eza' 'size-prefix' binary
+zstyle ':omz:plugins:eza' 'hyperlink' yes
+
+source ~/.tldr.complete
+
 source "$HOME/.rye/env"
 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
@@ -87,6 +106,7 @@ plugins=(
     colorize
     command-not-found
     common-aliases
+    eza
     compleat
     composer
     emacs
@@ -151,13 +171,6 @@ PATH="$HOME/python-env/.venv/bin:$PATH"
 
 export PATH
 
-zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
-zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
-zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
-zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
-
-alias ls="eza --icons -F"
-
-source ~/.tldr.complete
+unalias l
 
 # .eol.
