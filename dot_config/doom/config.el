@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
+(setq user-full-name "Nate Doohyun Jang"
+      user-mail-address "antz@duck.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -42,23 +42,20 @@
 ;;(setq all-the-icons-scale-factor 1.1)
 ;;(setq doom-modeline-major-mode-icon t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 기본 영문 폰트 설정 (JetBrainsMono Nerd Font Mono)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14))
+(setq default-input-method "korean-hangul3f")
 
-;; 한글 폰트 설정 (D2CodingLigature Nerd Font Mono)
-;; 유니코드 한글 블록에만 적용
-(set-fontset-font t 'hangul (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14))
+;;; (setq doom-unicode-font (font-spec :family "NanumGothicCoding" :size 14))
+(setq doom-font (font-spec :family "NanumGothicCoding" :size 14)
+      doom-symbol-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14))
 
 ;; nerd-icons 설정
 (use-package nerd-icons
   :custom
   (nerd-icons-font-family "JetBrainsMono Nerd Font Mono")
   :config
-  (setq nerd-icons-scale-factor 1.2)
-  (setq nerd-icons-default-adjust 0.0))
-
+  (setq nerd-icons-scale-factor 1.5)
+  (setq nerd-icons-default-adjust -0.1))
+;;;
 ;; 모드라인 설정
 (setq doom-modeline-icon t
       doom-modeline-major-mode-icon t
@@ -67,13 +64,13 @@
       doom-modeline-bar-width 3
       doom-modeline-segment-padding 2
       doom-modeline-icon-size 12)
-
-;; 모드라인 폰트 설정 (영문 기준)
-(set-face-attribute 'mode-line nil :family "JetBrainsMono Nerd Font Mono" :height 140)
-(set-face-attribute 'mode-line-inactive nil :family "JetBrainsMono Nerd Font Mono" :height 140)
-
-;; 아이콘 폰트 설정
-(set-fontset-font t 'symbol "JetBrainsMono Nerd Font Mono" nil 'prepend)
+;;;
+;;; ;; 모드라인 폰트 설정 (영문 기준)
+;;; (set-face-attribute 'mode-line nil :family "JetBrainsMono Nerd Font Mono" :height 140)
+;;; (set-face-attribute 'mode-line-inactive nil :family "JetBrainsMono Nerd Font Mono" :height 140)
+;;;
+;;; ;; 아이콘 폰트 설정
+;;; (set-fontset-font t 'symbol "JetBrainsMono Nerd Font Mono" nil 'prepend)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -157,23 +154,21 @@
 ;;  :config
 ;;  (setq lsp-pyls-server-command "pdm run pylsp"))
 ;;
-(setenv "PYTHONPATH" (shell-command-to-string "pdm info --python-path"))
 
-(after! python
-  (setq python-shell-interpreter "pdm"
-        python-shell-interpreter-args "run python"))
+;; Ruff LSP 및 포매터 설정
+(add-hook 'python-mode-hook 'eglot-ensure)
 
-(after! lsp-pyright
-  (setq lsp-pyright-venv-path (expand-file-name "~/.local/share/pdm/venvs")))
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(python-mode . ("ruff" "server")))
+  (add-hook 'after-save-hook 'eglot-format))
 
+(require 'flymake-ruff)
+(add-hook 'python-mode-hook #'flymake-ruff-load)
 
-(use-package! pyvenv
-  :config
-  (pyvenv-mode 1)
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (when-let ((pdm-root (locate-dominating-file default-directory "pyproject.toml")))
-                (pyvenv-activate (expand-file-name ".venv" pdm-root))))))
+(require 'ruff-format)
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+
 
 (use-package! denote
   :config
@@ -185,19 +180,29 @@
   (setq denote-prompts '(title keywords))
   (setq denote-allow-multi-word-keywords t))
 
+;; Rye shims 경로 추가 (이미 적용됨)
+(setenv "PATH" (concat (getenv "HOME") "/.rye/shims:" (getenv "PATH")))
+(setq exec-path (cons (expand-file-name "~/.rye/shims") exec-path))
 
-(after! lsp-mode
-  (set-eglot-client! 'python-mode '("pylsp"))
-  (setq lsp-pylsp-server-command
-        (list (expand-file-name "__pypackages__/3.13/bin/pylsp" (projectile-project-root)))))
+;; Python 인터프리터를 Rye의 shim python으로 지정
+(after! python
+  (setq python-shell-interpreter "python"
+        python-shell-virtualenv-root nil
+        lsp-pyright-python-executable-cmd "python"))
 
-(setq lsp-pylsp-plugins-black-enabled t)
-(setq lsp-pylsp-plugins-mypy-enabled t)
-(setq lsp-pylsp-plugins-ruff-enabled t)
+;; 프로젝트별 .venv 자동 활성화 (Rye 사용)
+(use-package! pyvenv
+  :config
+  (pyvenv-mode 1)
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (when-let ((venv-root (locate-dominating-file default-directory ".venv")))
+                (pyvenv-activate (expand-file-name ".venv" venv-root))))))
 
+;; 필요하다면 PYTHONPATH도 수동 설정 가능 (대부분 필요 없음)
+;; (setenv "PYTHONPATH" "<원하는 경로>")
 
 ;; eshell
-
 (setq eshell-scroll-to-bottom-on-output nil)
 (setq eshell-scroll-show-maximum-output nil)
 
@@ -241,5 +246,7 @@
 ;; chezmoi
 (global-set-key (kbd "C-c C f")  #'chezmoi-find)
 (global-set-key (kbd "C-c C s")  #'chezmoi-write)
+
+
 
 ;; eol

@@ -52,3 +52,7 @@
 (package! denote)
 
 (package! chezmoi)
+
+;; Ruff LSP를 eglot과 함께 사용
+(package! ruff-format)
+(package! flymake-ruff)
