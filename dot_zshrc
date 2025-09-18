@@ -8,19 +8,19 @@ zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
 zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
 zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
 
-# eza
-# alias ls="eza --icons -F"
-zstyle ':omz:plugins:eza' 'dirs-first' yes
-zstyle ':omz:plugins:eza' 'git-status' yes
-zstyle ':omz:plugins:eza' 'header' yes
-# zstyle ':omz:plugins:eza' 'show-group' yes
-zstyle ':omz:plugins:eza' 'icons' yes
-zstyle ':omz:plugins:eza' 'color-scale' all
-# zstyle ':omz:plugins:eza' 'color-scale-mode' gradient|fixed
-# zstyle ':omz:plugins:eza' 'size-prefix' binary
-zstyle ':omz:plugins:eza' 'hyperlink' yes
+# # eza
+# # alias ls="eza --icons -F"
+# zstyle ':omz:plugins:eza' 'dirs-first' yes
+# zstyle ':omz:plugins:eza' 'git-status' yes
+# zstyle ':omz:plugins:eza' 'header' yes
+# # zstyle ':omz:plugins:eza' 'show-group' yes
+# zstyle ':omz:plugins:eza' 'icons' yes
+# zstyle ':omz:plugins:eza' 'color-scale' all
+# # zstyle ':omz:plugins:eza' 'color-scale-mode' gradient|fixed
+# # zstyle ':omz:plugins:eza' 'size-prefix' binary
+# zstyle ':omz:plugins:eza' 'hyperlink' yes
 
-source ~/.tldr.complete
+# source ~/.tldr.complete
 
 source "$HOME/.rye/env"
 
@@ -106,7 +106,7 @@ plugins=(
     colorize
     command-not-found
     common-aliases
-    eza
+    # eza
     compleat
     composer
     emacs
@@ -150,16 +150,16 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-autopair/autopair.zsh
-source /usr/local/share/zsh-system-clipboard/zsh-system-clipboard.zsh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-you-should-use/you-should-use.plugin.zsh
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autopair/autopair.zsh
+source /opt/homebrew/share/zsh-system-clipboard/zsh-system-clipboard.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
+  fpath=(~/.zfunc $fpath)
   autoload -Uz compinit
   compinit
 fi
@@ -172,5 +172,84 @@ PATH="$HOME/python-env/.venv/bin:$PATH"
 export PATH
 
 unalias l
+
+# https://fx.wtf/
+source <(fx --comp zsh)
+
+# oh-my-posh https://ohmyposh.dev/
+eval "$(oh-my-posh init zsh)"
+
+# starship
+# eval "$(starship init zsh)"
+
+# lsr
+# unalias lsr
+# alias ls=lsr
+# alias l=lsr\ -al
+
+export PATH="$HOME/.aider-env/bin:$PATH"
+export PATH="/usr/local/opt/openjdk@17/bin:$PATH"
+export ANDROID_HOME=/Users/1001028/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/build-tools/36.0.0
+
+# unalias fd
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# opencode
+export PATH=/Users/1001028/.opencode/bin:$PATH
+
+# System Update
+update() {
+    # Check if curl is available
+    if ! command -v curl >/dev/null 2>&1; then
+        echo "Error: curl is required but not installed. Please install curl." >&2
+        return
+    fi
+
+    # Check internet connection by pinging a reliable server
+    TEST_URL="https://www.google.com"
+
+    # Use curl to check the connection
+    TEST_RESP=$(curl -Is --connect-timeout 5 --max-time 10 "${TEST_URL}" 2>/dev/null | head -n 1)
+
+    # Check if response is empty
+    if [ -z "${TEST_RESP}" ]; then
+        echo "No Internet Connection!!!" >&2
+        return
+    fi
+
+    # Check for "200" in the response
+    if ! printf "%s" "${TEST_RESP}" | grep -q "200"; then
+        echo "Internet is not working!!!" >&2
+        return
+    fi
+
+    curl -fsSL https://raw.githubusercontent.com/andmpel/MacOS-All-In-One-Update-Script/HEAD/update-all.sh | zsh
+}
+
+# clean $PATH
+dedup_path() {
+  local IFS=":"
+  local -a path_array result
+  typeset -A seen
+  path_array=($PATH)
+  for p in $path_array; do
+    if [[ -z ${seen[$p]} ]]; then
+      result+=($p)
+      seen[$p]=1
+    fi
+  done
+  export PATH="${(j.:.)result}"
+}
+
+export PATH="/opt/homebrew/bin:$PATH"
+
+dedup_path
+
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 
 # .eol.

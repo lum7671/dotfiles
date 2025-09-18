@@ -44,8 +44,8 @@
 
 (setq default-input-method "korean-hangul3f")
 
-;;; (setq doom-unicode-font (font-spec :family "NanumGothicCoding" :size 14))
-(setq doom-font (font-spec :family "NanumGothicCoding" :size 14)
+;;; (setq doom-unicode-font (font-spec :family "D2CodingLigature Nerd Font Mono" :size 14))
+(setq doom-font (font-spec :family "D2CodingLigature Nerd Font Propo" :size 14)
       doom-symbol-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14))
 
 ;; nerd-icons 설정
@@ -247,6 +247,126 @@
 (global-set-key (kbd "C-c C f")  #'chezmoi-find)
 (global-set-key (kbd "C-c C s")  #'chezmoi-write)
 
+;; aidermacs - AI pair programming with Aider
+(use-package! aidermacs
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :config
+  ;; aider 프로그램 경로 설정
+  (setq aidermacs-program (expand-file-name "~/.aider-env/bin/aider"))
+  
+  ;; OpenCode 토큰을 찾는 함수
+  (defun get-opencode-api-key ()
+    "OpenCode에서 사용하는 API 키를 찾습니다."
+    (or 
+     ;; 1. 환경변수에서 확인
+     (getenv "OPENCODE_API_KEY")
+     (getenv "ANTHROPIC_API_KEY") 
+     (getenv "OPENAI_API_KEY")
+     ;; 2. 설정 파일에서 확인 (JSON 형태)
+     (let* ((config-files '("~/.config/opencode/config.json"
+                           "~/.opencode/config.json" 
+                           "~/.config/opencode/settings.json"
+                           "~/Library/Application Support/OpenCode/config.json"))
+            (api-key nil))
+       (dolist (file config-files api-key)
+         (let ((expanded-file (expand-file-name file)))
+           (when (and (file-exists-p expanded-file) (not api-key))
+             (with-temp-buffer
+               (insert-file-contents expanded-file)
+               (goto-char (point-min))
+               (when (re-search-forward "\"\\(anthropic\\|openai\\)_api_key\"\\s-*:\\s-*\"\\([^\"]+\\)\"" nil t)
+                 (setq api-key (match-string 2))))))))
+     ;; 3. macOS keychain에서 확인 시도
+     (ignore-errors
+       (string-trim 
+        (shell-command-to-string 
+         "security find-generic-password -s 'opencode' -w 2>/dev/null || security find-generic-password -s 'anthropic' -w 2>/dev/null")))))
+
+  ;; OpenCode 토큰 설정
+  (let ((opencode-token (get-opencode-api-key)))
+    (when opencode-token
+      ;; Anthropic 토큰으로 우선 설정 (OpenCode에서 주로 Claude 사용)
+      (if (string-match-p "^sk-ant-" opencode-token)
+          (setenv "ANTHROPIC_API_KEY" opencode-token)
+        ;; OpenAI 토큰인 경우  
+        (setenv "OPENAI_API_KEY" opencode-token))
+      (message "OpenCode API 키가 설정되었습니다.")))
+
+  ;; 수동 설정 옵션 (OpenCode 토큰을 직접 입력하고 싶은 경우)
+  ;; 아래 라인의 주석을 해제하고 실제 토큰을 입력하세요:
+  ;; (setenv "ANTHROPIC_API_KEY" "sk-ant-your-opencode-token-here")
+  ;; 또는
+  ;; (setenv "OPENAI_API_KEY" "sk-your-opencode-token-here")
+  
+  :custom
+  ;; OpenCode와 유사한 설정으로 구성
+  (aidermacs-default-chat-mode 'code)
+  (aidermacs-default-model 
+   (cond 
+    ;; Anthropic Claude (OpenCode에서 주로 사용)
+    ((getenv "ANTHROPIC_API_KEY") "claude-3-5-sonnet-20241022")
+    ;; DeepSeek (저렴한 대안)
+    ((getenv "DEEPSEEK_API_KEY") "deepseek/deepseek-coder")
+    ;; OpenAI GPT (대안)
+    ((getenv "OPENAI_API_KEY") "gpt-4o")
+    ;; 기본: 로컬 코딩 특화 모델
+    (t "ollama/deepseek-coder-v2-instruct")))
+  
+  (aidermacs-backend 'vterm)
+  (aidermacs-auto-commits nil)
+  (aidermacs-show-diff-after-change t)
+  (aidermacs-exit-kills-buffer t)
+  
+  ;; OpenCode와 유사한 사용 경험을 위한 추가 옵션
+  (aidermacs-extra-args '("--no-auto-commits" 
+                          "--show-diffs"
+                          "--dark-mode"
+                          "--pretty"
+                          "--model" "ollama/deepseek-coder-v2-instruct")))
+
+
+;; GitHub Copilot 설정
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :config
+  ;; Copilot 완성을 표시할 때 더 명확하게 보이도록 설정
+  (setq copilot-indent-offset-warning-disable t)
+  ;; 한국어 주석도 잘 작동하도록 설정
+  (setq copilot-max-char -1))
+
+;; GitHub Copilot Chat 설정 (올바른 함수명 사용)
+(use-package! copilot-chat
+  :defer t
+  :commands (copilot-chat 
+             copilot-chat-ask-and-insert
+             copilot-chat-explain 
+             copilot-chat-fix 
+             copilot-chat-optimize
+             copilot-chat-test
+             copilot-chat-doc
+             copilot-chat-review
+             copilot-chat-transient)
+  :bind (("C-c c c" . copilot-chat)                    ; 메인 채팅
+         ("C-c c i" . copilot-chat-ask-and-insert)     ; 질문하고 결과 삽입
+         ("C-c c e" . copilot-chat-explain)            ; 코드 설명
+         ("C-c c f" . copilot-chat-fix)                ; 코드 수정
+         ("C-c c o" . copilot-chat-optimize)           ; 코드 최적화
+         ("C-c c t" . copilot-chat-test)               ; 테스트 생성
+         ("C-c c d" . copilot-chat-doc)                ; 문서 생성
+         ("C-c c r" . copilot-chat-review)             ; 코드 리뷰
+         ("C-c c m" . copilot-chat-transient))         ; 메뉴
+  :config
+  ;; 기본 설정
+  (setq copilot-chat-frontend 'shell-maker)
+  (setq copilot-chat-backend 'curl)
+  
+  ;; GitHub 로그인 확인
+  (message "GitHub Copilot Chat 로드됨. 'M-x copilot-chat'로 시작하세요."))
 
 
 ;; eol
