@@ -182,10 +182,10 @@ eval "$(oh-my-posh init zsh)"
 # starship
 # eval "$(starship init zsh)"
 
-# lsr
-# unalias lsr
-# alias ls=lsr
-# alias l=lsr\ -al
+lsr
+unalias lsr
+alias ls=lsr
+alias l=lsr\ -al
 
 export PATH="$HOME/.aider-env/bin:$PATH"
 export PATH="/usr/local/opt/openjdk@17/bin:$PATH"
