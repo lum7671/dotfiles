@@ -57,21 +57,3 @@
 (package! ruff-format)
 (package! flymake-ruff)
 
-;; AI pair programming with Aider
-(package! aidermacs)
-
-;; Terminal emulator for Emacs
-(package! vterm)
-
-;; GitHub Copilot integration
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
-
-;; Dependencies for copilot-chat
-(package! shell-maker)
-(package! polymode)
-(package! aio)
-
-;; GitHub Copilot Chat
-(package! copilot-chat
-  :recipe (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
