@@ -182,7 +182,7 @@ eval "$(oh-my-posh init zsh)"
 # starship
 # eval "$(starship init zsh)"
 
-lsr
+# lsr
 unalias lsr
 alias ls=lsr
 alias l=lsr\ -al
